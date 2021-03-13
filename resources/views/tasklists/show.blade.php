@@ -14,6 +14,10 @@
             <th>タスク</th>
             <td>{{ $tasklist->content }}</td>
         </tr>
+        <tr>
+            <th>ステータス</th>
+            <td>{{ $tasklist->status }}</td>
+        </tr>
     </table>
     
         {{-- メッセージ編集ページへのリンク --}}

@@ -11,6 +11,8 @@
                 <tr>
                     <th>id</th>
                     <th>タスク</th>
+                    <th>ステータス</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -18,6 +20,7 @@
                 <tr>
                     <td>{!! link_to_route('task-list.show',$tasklist->id , ['task_list'=> $tasklist->id]) !!}</td>
                     <td>{{ $tasklist->content }}</td>
+                    <td>{{ $tasklist->status }}</td>
                 </tr>
                 @endforeach
             </tbody>
