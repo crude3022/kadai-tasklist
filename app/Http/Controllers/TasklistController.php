@@ -45,9 +45,12 @@ class TasklistController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+     public function store(Request $request)
     {
-         // メッセージを作成
+        $request->validate([
+            'content' => 'required | max:255'
+            ]);
+        
         $tasklist = new Task;
         $tasklist->content = $request->content;
         $tasklist->save();
@@ -99,6 +102,11 @@ class TasklistController extends Controller
      */
     public function update(Request $request, $id)
     {
+          // バリデーション
+        $request->validate([
+            'content' => 'required|max:255',
+        ]);
+            // idの値でメッセージを検索して取得
         $tasklist = Task::findOrFail($id);
         // メッセージを更新
         $tasklist->content = $request->content;

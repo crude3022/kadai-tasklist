@@ -2,6 +2,7 @@
 
 @section('content')
 
+
 <!-- ここにページ毎のコンテンツを書く -->
     <h1>タスク新規作成ページ</h1>
 
@@ -10,7 +11,7 @@
             {!! Form::model($tasklist, ['route' => 'task-list.store']) !!}
 
                 <div class="form-group">
-                    {!! Form::label('content', 'メッセージ:') !!}
+                    {!! Form::label('content', 'タスク:') !!}
                     {!! Form::text('content', null, ['class' => 'form-control']) !!}
                 </div>
 
