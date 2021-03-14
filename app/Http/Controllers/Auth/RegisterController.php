@@ -1,5 +1,9 @@
 <?php
 
+/*
+ユーザー登録のためのコントローラー
+*/
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -29,6 +33,12 @@ class RegisterController extends Controller
      *
      * @var string
      */
+    
+    /**
+     * ユーザ登録が完了すると、ログイン状態になった上で、指定のリダイレクト先へ飛ぶようになっています。
+     *そのリダイレクト先は $redirectTo 変数に設定されている定数 RouteServiceProvider::HOME で定義されています。
+     */ 
+     
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
@@ -36,6 +46,10 @@ class RegisterController extends Controller
      *
      * @return void
      */
+     
+    /*
+    ゲストにだけユーザ登録やログインを実行させるため guest ミドルウェアを指定している
+    */
     public function __construct()
     {
         $this->middleware('guest');
