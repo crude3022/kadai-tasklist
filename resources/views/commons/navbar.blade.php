@@ -10,6 +10,10 @@
                 <div class="collapse navbar-collapse" id="nav-bar">
                     <ul class="navbar-nav mr-auto"></ul>s
                     <ul class="navbar-nav">
+                        {{-- ユーザ登録ページへのリンク --}}
+                        <li class="nav-item"><a href="#" class="nav-link">Signup</a></li>
+                        {{-- ログインページへのリンク --}}
+                        <li class="nav-item"><a href="#" class="nav-link">Login</a></li>
                         {{-- メッセージ作成ページへのリンク --}}
                         <li class="nav-item">{!! link_to_route('task-list.create', '新規タスクの投稿', [], ['class' => 'btn btn-primary']) !!}</li>
                     </ul>
