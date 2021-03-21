@@ -12,11 +12,12 @@
                     <th>id</th>
                     <th>タスク</th>
                     <th>ステータス</th>
+
                     
                 </tr>
             </thead>
             <tbody>
-                @foreach ($tasklists as $tasklist)
+                @foreach ($tasklists  as $tasklist)
                 <tr>
                     <td>{!! link_to_route('task-list.show',$tasklist->id , ['task_list'=> $tasklist->id]) !!}</td>
                     <td>{{ $tasklist->content }}</td>

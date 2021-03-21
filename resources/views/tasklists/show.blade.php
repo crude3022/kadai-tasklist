@@ -17,8 +17,13 @@
         <tr>
             <th>ステータス</th>
             <td>{{ $tasklist->status }}</td>
-        </tr>
+    　　</tr>
     </table>
+    
+    @if (Auth::id() == $user->id)
+        {{-- 投稿フォーム --}}
+        @include('microposts.form')
+    @endif
     
         {{-- メッセージ編集ページへのリンク --}}
     {!! link_to_route('task-list.edit', 'このタスクを編集',['task_list'=> $tasklist->id], ['class' => 'btn btn-light']) !!}

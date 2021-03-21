@@ -4,11 +4,11 @@
 
 
 <!-- ここにページ毎のコンテンツを書く -->
- <h1>id: {{ $tasklist->id }} のタスク編集ページ</h1>
+ <h1>id: {{ $micropost->id }} のタスク編集ページ</h1>
 
     <div class="row">
         <div class="col-6">
-            {!! Form::model($tasklist, ['route' => ['task-list.update', $tasklist->id], 'method' => 'put']) !!}
+            {!! Form::model($micropost,['route' => ['task-list.update', $micropost->id], 'method' => 'put']) !!}
 　　　　　   @csrf   
                 <div class="form-group">
                     {!! Form::label('content', 'タスク:') !!}

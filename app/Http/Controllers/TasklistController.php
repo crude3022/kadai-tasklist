@@ -15,13 +15,22 @@ class TasklistController extends Controller
      */
     public function index()
     {
-          $tasklists = Task::all();
+          $data = [];
+        if (\Auth::check()) { // 認証済みの場合
+            // 認証済みユーザを取得
+            $user = \Auth::user();
+            // ユーザの投稿の一覧を作成日時の降順で取得
+            // （後のChapterで他ユーザの投稿も取得するように変更しますが、現時点ではこのユーザの投稿のみ取得します）
+            $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);
 
-        // メッセージ一覧ビューでそれを表示
-        return view('tasklists.index ', [
-            'tasklists' => $tasklists,
-        ]);
-    
+            $data = [
+                'user' => $user,
+                'microposts' => $microposts,
+            ];
+        }
+
+        // Welcomeビューでそれらを表示
+        return view('welcome', $data);
     }
 
     /**
@@ -52,13 +61,13 @@ class TasklistController extends Controller
             'content' => 'required | max:255',
             ]);
         
-        $tasklist = new Task;
-        $tasklist->status = $request->status;
-        $tasklist->content = $request->content;
-        $tasklist->save();
+       $request->user()->microposts()->create([
+            'content' => $request->content,
+            'status' => $request->status,
+        ]);
 
-        // トップページへリダイレクトさせる
-        return redirect('/');
+        // 前のURLへリダイレクトさせる
+        return back();
     }
 
     /**
@@ -69,12 +78,20 @@ class TasklistController extends Controller
      */
     public function show($id)
     {
-          // idの値でメッセージを検索して取得
-        $tasklist = Task::findOrFail($id);
-
+         // idの値でユーザを検索して取得
+        $user = User::findOrFail($id);
+        
+        // 関係するモデルの件数をロード
+        $user->loadRelationshipCounts();
+        
+        $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);
+        
+       
         // メッセージ詳細ビューでそれを表示
         return view('tasklists.show', [
-            'tasklist' => $tasklist,
+            'user' => $user,
+            'microposts' => $microposts,
+        
         ]);
     }
 
@@ -87,12 +104,12 @@ class TasklistController extends Controller
     public function edit($id)
     {
           // idの値でメッセージを検索して取得
-        $tasklist = Task::findOrFail($id);
+       $micropost = \App\Task::findOrFail($id);
 
-        // メッセージ編集ビューでそれを表示
-        return view('tasklists.edit', [
-            'tasklist' => $tasklist,
+       return view('tasklists.edit', [
+            'micropost' => $micropost,
         ]);
+
     }
 
     /**
@@ -110,11 +127,11 @@ class TasklistController extends Controller
             'content' => 'required|max:255',
         ]);
             // idの値でメッセージを検索して取得
-        $tasklist = Task::findOrFail($id);
+       $micropost = \App\Task::findOrFail($id);
         // メッセージを更新
-        $tasklist->status = $request->status;
-        $tasklist->content = $request->content;
-        $tasklist->save();
+        $micropost->status = $request->status;
+        $micropost->content = $request->content;
+        $micropost->save();
 
         // トップページへリダイレクトさせる
         return redirect('/');
@@ -129,10 +146,14 @@ class TasklistController extends Controller
     public function destroy($id)
     {
        $tasklist = Task::findOrFail($id);
+       
+        if (\Auth::id() === $tasklist->user_id) {
+            $tasklist->delete();
+        }
         // メッセージを削除
         $tasklist->delete();
 
         // トップページへリダイレクトさせる
-        return redirect('/');
+        return back();
     }
 }
