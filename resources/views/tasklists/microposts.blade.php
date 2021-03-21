@@ -8,7 +8,7 @@
                     </div>
                     <div>
                         {{-- 投稿内容 --}}
-                        <p class="mb-0">  ID    :{!! nl2br(e($micropost->id)) !!}</p>
+                        <p class="mb-0">投稿 ID    :{!! nl2br(e($micropost->id)) !!}</p>
                         <p class="mb-0">タスク　:{!! nl2br(e($micropost->content)) !!}</p>
                         <p class="mb-0">状態　　:{!! nl2br(e($micropost->status)) !!}</p>
                     </div>
